@@ -1,15 +1,13 @@
 # chtf - Terraform version switcher
 
-This repository includes Homebrew Casks to install multiple Terraform versions (since 0.6.6) at the same time, and a `chtf` helper to specify which one to use. `chtf` also installs the specified version automatically if needed.
+`chtf` is a small shell tool for selecting a specified [Terraform](https://www.terraform.io/) version. It can also install the specified version automatically.
 
-## Usage
+## Installation
 
-Tap this repository:
+On MacOS (and OSX) the recommended way is to use [Homebrew](https://brew.sh/) and [homebrew-terraforms](https://github.com/Yleisradio/homebrew-terraforms).
+After installing Homebrew, run:
 
     brew tap Yleisradio/terraforms
-
-Install the `chtf` helper:
-
     brew install chtf
 
 Add the following to the ~/.bashrc or ~/.zshrc file:
@@ -33,10 +31,6 @@ end
 Then select the wanted Terraform version to use with `chtf`.
 
     chtf 0.11.3
-
-You can also just install a specific Terraform version (but you'll need to use `chtf` or adjust `PATH` yourself to use it):
-
-    brew cask install terraform-0.6.9
 
 ## Contibuting
 
