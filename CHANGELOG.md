@@ -1,4 +1,4 @@
-# 1.4.1 / _Not released yet_
+# 2.0.0 / _Not released yet_
 
 
 # 1.4.0 / 2018-04-27
@@ -10,7 +10,7 @@
 
 # 1.3.0 / 2017-11-06
 
-* Add support for the fish shell [GH-14]
+* Add support for the fish shell [GH-14](https://github.com/Yleisradio/homebrew-terraforms/issues/14)
 
 # 1.2.1 / 2016-09-26
 
@@ -19,7 +19,7 @@
 
 # 1.2.0 / 2016-09-26
 
-* Add `CHTF_CURRENT_TERRAFORM_VERSION` variable for easy access to the currently selected version number [GH-3]
+* Add `CHTF_CURRENT_TERRAFORM_VERSION` variable for easy access to the currently selected version number [GH-3](https://github.com/Yleisradio/homebrew-terraforms/issues/3)
 
 # 1.1.1 / 2016-06-27
 
@@ -27,7 +27,7 @@
 
 # 1.1.0 / 2016-06-27
 
-* Fix the `CASKROOM` default location [GH-2]
+* Fix the `CASKROOM` default location [GH-2](https://github.com/Yleisradio/homebrew-terraforms/issues/2)
 
 # 1.0.1 / 2016-01-22
 
