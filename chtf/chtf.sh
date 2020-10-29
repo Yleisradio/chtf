@@ -1,5 +1,6 @@
 # Copyright (c) 2012-2016 Hal Brodigan
 # Copyright (c) 2016-2018 Yleisradio Oy
+# Copyright (c) 2020 Teemu Matilainen
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -20,7 +21,21 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-: "${CASKROOM:=$(brew --prefix)/Caskroom}"
+# Set defaults
+
+: "${CHTF_AUTO_INSTALL:=ask}"
+
+if [[ -z "$CHTF_TERRAFORM_DIR" ]]; then
+    if [[ "$CHTF_AUTO_INSTALL_METHOD" == 'homebrew' ]]; then
+        CHTF_TERRAFORM_DIR="$(brew --caskroom)"
+    elif [[ -z "$CHTF_AUTO_INSTALL_METHOD" ]] && brew tap 2>/dev/null | grep -q '^yleisradio/terraforms$'; then
+        # https://github.com/Yleisradio/homebrew-terraforms in use
+        CHTF_TERRAFORM_DIR="$(brew --caskroom)"
+        CHTF_AUTO_INSTALL_METHOD='homebrew'
+    else
+        CHTF_TERRAFORM_DIR="$HOME/.terraforms"
+    fi
+fi
 
 chtf() {
     case "$1" in
@@ -53,25 +68,26 @@ _chtf_reset() {
     unset CHTF_CURRENT_TERRAFORM_VERSION
 }
 
-_chtf_install() {
-    echo "chtf: Installing Terraform version $1"
-    brew cask install "terraform-$1"
-}
-
 _chtf_use() {
-    local tf_path="$CASKROOM/terraform-$1/$1"
+    local tf_version="$1"
+    local tf_path="$CHTF_TERRAFORM_DIR/terraform-$tf_version"
 
-    [[ -d "$tf_path" ]] || _chtf_install "$1" || return 1
+    if [[ ! -d "$tf_path" ]]; then
+        _chtf_install "$tf_version" || return 1
+    fi
 
-    if [[ ! -x "$tf_path/terraform" ]]; then
-        echo "chtf: $tf_path/terraform not executable" >&2
+    # Homebrew adds a subdir named by the package version, so we test that first
+    if [[ -x "$tf_path/$tf_version/terraform" ]]; then
+        tf_path="$tf_path/$tf_version"
+    elif [[ ! -x "$tf_path/terraform" ]]; then
+        echo "chtf: Failed to find terraform executable in $tf_path" >&2
         return 1
     fi
 
     _chtf_reset
 
     export CHTF_CURRENT="$tf_path"
-    export CHTF_CURRENT_TERRAFORM_VERSION="$1"
+    export CHTF_CURRENT_TERRAFORM_VERSION="$tf_version"
     export PATH="$CHTF_CURRENT:$PATH"
 }
 
@@ -83,14 +99,57 @@ _chtf_list() (
     # zsh
     setopt null_glob 2>/dev/null || true
 
-    for dir in "$CASKROOM"/terraform-*/*; do
-        if [[ "$dir" == "$CHTF_CURRENT" ]]; then
-            echo " * $(basename "$dir")"
-        else
-            echo "   $(basename "$dir")"
-        fi
+    for dir in "$CHTF_TERRAFORM_DIR"/terraform-*; do
+        local tf_version="${dir##*/terraform-}"
+        local prefix="$(_chtf_list_prefix "$tf_version")"
+        printf '%s %s\n' "$prefix" "$tf_version"
     done;
 )
+
+_chtf_list_prefix() {
+    local tf_version="$1"
+    if [[ "$tf_version" == "$CHTF_CURRENT_TERRAFORM_VERSION" ]]; then
+        printf ' *'
+    else
+        printf '  '
+    fi
+}
+
+_chtf_install() {
+    local tf_version="$1"
+    echo "chtf: Terraform version $tf_version not found" >&2
+
+    case "$CHTF_AUTO_INSTALL_METHOD" in
+        homebrew)
+            _chtf_confirm "$tf_version" || return 1
+
+            echo "chtf: Installing Terraform version $tf_version"
+            brew cask install "terraform-$tf_version"
+            ;;
+        *)
+            # Other auto installation methods not yet supported
+            # TODO: https://github.com/robertpeteuil/terraform-installer
+            return 1
+            ;;
+    esac
+}
+
+_chtf_confirm() {
+    case "$CHTF_AUTO_INSTALL" in
+        no|false|0)
+            return 1;;
+        ask)
+            printf 'chtf: Do you want to install it? [yN] '
+            if [[ -n "$ZSH_NAME" ]]; then
+                read -k reply
+            else
+                read -n 1 -r reply
+            fi
+            echo
+            [[ "$reply" == [Yy] ]] || return 1
+            ;;
+    esac
+}
 
 _chtf_root_dir() {
     if [[ -n "$BASH" ]]; then
@@ -103,4 +162,4 @@ _chtf_root_dir() {
 }
 
 # Load and store the version number
-CHTF_VERSION=$(cat "$(_chtf_root_dir)/VERSION" 2>/dev/null)
+CHTF_VERSION=$(cat "$(_chtf_root_dir)/VERSION")
