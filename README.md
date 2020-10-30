@@ -38,6 +38,10 @@ Bug reports, pull requests, and other contributions are welcome on GitHub at htt
 
 This project is intended to be a safe, welcoming space for collaboration. By participating in this project you agree to abide by the terms of [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
 
-## Credits
+## Licence and Credits
 
-Idea and implementation heavily affected by [chruby](https://github.com/postmodern/chruby).
+The software is available as open source under the terms of the [MIT License](LICENSE).
+
+Original idea and implementation of `chtf` heavily affected by [chruby](https://github.com/postmodern/chruby).
+
+Included [terraform-installer](https://github.com/robertpeteuil/terraform-installer) is released under the [Apache 2.0 License](https://github.com/robertpeteuil/terraform-installer/blob/1.5.4/LICENSE).
