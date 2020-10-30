@@ -56,7 +56,7 @@ end
 function _chtf_reset
     test -z "$CHTF_CURRENT"; and return 0
 
-    set -g fish_user_paths (string match -v -- $CHTF_CURRENT $fish_user_paths)
+    set PATH (string match -v -- $CHTF_CURRENT $PATH)
 
     set -e CHTF_CURRENT
     set -e CHTF_CURRENT_TERRAFORM_VERSION
@@ -81,7 +81,7 @@ function _chtf_use -a tf_version
 
     set -gx CHTF_CURRENT $tf_path
     set -gx CHTF_CURRENT_TERRAFORM_VERSION $tf_version
-    set -g fish_user_paths $CHTF_CURRENT $fish_user_paths
+    set PATH $CHTF_CURRENT $PATH
 end
 
 function _chtf_list
