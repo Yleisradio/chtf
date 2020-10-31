@@ -37,10 +37,12 @@ if [[ -z "$CHTF_TERRAFORM_DIR" ]]; then
     fi
 fi
 
+: "${CHTF_AUTO_INSTALL_METHOD:=zip}"
+
 chtf() {
     case "$1" in
         -h|--help)
-            echo "usage: chtf [VERSION | system]"
+            echo "usage: chtf [<version> | system]"
             ;;
         -V|--version)
             echo "chtf: ${CHTF_VERSION:-[unknown version]}"
@@ -72,11 +74,11 @@ _chtf_use() {
     local tf_version="$1"
     local tf_path="$CHTF_TERRAFORM_DIR/terraform-$tf_version"
 
-    if [[ ! -d "$tf_path" ]]; then
+    # Homebrew adds a subdir named by the package version, so we test also that
+    if [[ ! -x "$tf_path/terraform" && ! -x "$tf_path/$tf_version/terraform" ]]; then
         _chtf_install "$tf_version" || return 1
     fi
 
-    # Homebrew adds a subdir named by the package version, so we test that first
     if [[ -x "$tf_path/$tf_version/terraform" ]]; then
         tf_path="$tf_path/$tf_version"
     elif [[ ! -x "$tf_path/terraform" ]]; then
@@ -99,16 +101,23 @@ _chtf_list() (
     # zsh
     setopt null_glob 2>/dev/null || true
 
-    for dir in "$CHTF_TERRAFORM_DIR"/terraform-*; do
-        local tf_version="${dir##*/terraform-}"
-        local prefix="$(_chtf_list_prefix "$tf_version")"
+    for tf_path in "$CHTF_TERRAFORM_DIR"/terraform-*; do
+        local tf_version="${tf_path##*/terraform-}"
+
+        if [[ -x "$tf_path/$tf_version/terraform" ]]; then
+            tf_path="$tf_path/$tf_version"
+        elif [[ ! -x "$tf_path/terraform" ]]; then
+            continue
+        fi
+
+        local prefix="$(_chtf_list_prefix "$tf_path")"
         printf '%s %s\n' "$prefix" "$tf_version"
     done;
 )
 
 _chtf_list_prefix() {
-    local tf_version="$1"
-    if [[ "$tf_version" == "$CHTF_CURRENT_TERRAFORM_VERSION" ]]; then
+    local tf_path="$1"
+    if [[ "$tf_path" == "$CHTF_CURRENT" ]]; then
         printf ' *'
     else
         printf '  '
@@ -119,19 +128,29 @@ _chtf_install() {
     local tf_version="$1"
     echo "chtf: Terraform version $tf_version not found" >&2
 
-    case "$CHTF_AUTO_INSTALL_METHOD" in
-        homebrew)
-            _chtf_confirm "$tf_version" || return 1
+    local install_function="_chtf_install_$CHTF_AUTO_INSTALL_METHOD"
+    if ! command -v "$install_function" >/dev/null; then
+        echo "chtf: Unknown install method: $CHTF_AUTO_INSTALL_METHOD" >&2
+        return 1
+    fi
 
-            echo "chtf: Installing Terraform version $tf_version"
-            brew cask install "terraform-$tf_version"
-            ;;
-        *)
-            # Other auto installation methods not yet supported
-            # TODO: https://github.com/robertpeteuil/terraform-installer
-            return 1
-            ;;
-    esac
+    _chtf_confirm "$tf_version" || return 1
+
+    echo "chtf: Installing Terraform version $tf_version"
+    $install_function "$tf_version"
+}
+
+_chtf_install_homebrew() {
+    local tf_version="$1"
+    brew cask install "terraform-$tf_version"
+}
+
+_chtf_install_zip() {
+    local tf_version="$1"
+    local tf_dir="$CHTF_TERRAFORM_DIR/terraform-$tf_version"
+
+    mkdir -p "$tf_dir"
+    env TF_INSTALL_DIR="$tf_dir" "$(_chtf_root_dir)"/terraform-install.sh -i "$tf_version"
 }
 
 _chtf_confirm() {
