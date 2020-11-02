@@ -1,5 +1,18 @@
 # 2.0.0 / _Not released yet_
 
+New shiny release from new home! `chtf` now supports also non-Homebrew environments, also for auto-install.
+
+Despite major version number bump, `chtf` should work as is for most users of older versions. The only incompatible changes are:
+
+* The user is prompted for confirmation before automatically installing a missing Terraform version. This can be overridden by setting `CHTF_AUTO_INSTALL` to `yes/no/ask`.
+* The variable controlling install location for Terraform versions has been changed from `CASKROOM` to `CHTF_TERRAFORM_DIR`. Homebrew users should not need to touch it, but affects possible Linux users. For non-Homebrew environment the default is `$HOME/.terraforms/`.
+
+All changes:
+
+* Add official support for also other than Homebrew environments ([#1](https://github.com/Yleisradio/chtf/issues/1))
+* Add generic auto-installer using [terraform-installer](https://github.com/robertpeteuil/terraform-installer) ([#2](https://github.com/Yleisradio/chtf/issues/2))
+* Auto-install by default asks confirmation from the user
+* `chtf` extracted from [homebrew-terraforms](https://github.com/Yleisradio/homebrew-terraforms/) to own [chtf](https://github.com/Yleisradio/chtf) project ([Old #53](https://github.com/Yleisradio/homebrew-terraforms/issues/53))
 
 # 1.4.0 / 2018-04-27
 
@@ -10,7 +23,7 @@
 
 # 1.3.0 / 2017-11-06
 
-* Add support for the fish shell [GH-14](https://github.com/Yleisradio/homebrew-terraforms/issues/14)
+* Add support for the fish shell ([Old #14](https://github.com/Yleisradio/homebrew-terraforms/issues/14))
 
 # 1.2.1 / 2016-09-26
 
@@ -19,7 +32,7 @@
 
 # 1.2.0 / 2016-09-26
 
-* Add `CHTF_CURRENT_TERRAFORM_VERSION` variable for easy access to the currently selected version number [GH-3](https://github.com/Yleisradio/homebrew-terraforms/issues/3)
+* Add `CHTF_CURRENT_TERRAFORM_VERSION` variable for easy access to the currently selected version number ([Old #3](https://github.com/Yleisradio/homebrew-terraforms/issues/3))
 
 # 1.1.1 / 2016-06-27
 
@@ -27,7 +40,7 @@
 
 # 1.1.0 / 2016-06-27
 
-* Fix the `CASKROOM` default location [GH-2](https://github.com/Yleisradio/homebrew-terraforms/issues/2)
+* Fix the `CASKROOM` default location ([Old #2](https://github.com/Yleisradio/homebrew-terraforms/issues/2))
 
 # 1.0.1 / 2016-01-22
 
@@ -36,6 +49,5 @@
 # 1.0.0 / 2016-01-22
 
 * First release!
-* Homebrew Casks for Terraform versions from 0.6.6 to 0.6.9
 * `chtf` helper to automate the install and use of a specific Terraform version
 * Homebrew Formula for the `chtf` helper
