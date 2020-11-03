@@ -19,6 +19,8 @@ Optional automatic instal of missing Terraform versions requires either:
 
 ## Installation
 
+> :warning: **NOTE:** These instructions do not work as is until v2.0.0 is released. See the [Tips section](#tips) for installing the development version.
+
 ### Homebrew
 
 On MacOS (and OSX) the easiest way is to use Homebrew. After installing Homebrew, run:
