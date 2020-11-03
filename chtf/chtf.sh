@@ -110,8 +110,7 @@ _chtf_list() (
             continue
         fi
 
-        local prefix="$(_chtf_list_prefix "$tf_path")"
-        printf '%s %s\n' "$prefix" "$tf_version"
+        printf '%s %s\n' "$(_chtf_list_prefix "$tf_path")" "$tf_version"
     done;
 )
 
@@ -160,6 +159,7 @@ _chtf_confirm() {
         ask)
             printf 'chtf: Do you want to install it? [yN] '
             if [[ -n "$ZSH_NAME" ]]; then
+                # shellcheck disable=SC2162 # ignore zsh command
                 read -k reply
             else
                 read -n 1 -r reply
