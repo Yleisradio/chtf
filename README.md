@@ -31,7 +31,7 @@ Homebrew also installs the completion for all supported shells.
 
 Manual installation on all systems:
 
-    curl -L -o chtf-2.0.0.tar.gz https://github.com/postmodern/chruby/archive/v2.0.0.tar.gz
+    curl -L -o chtf-2.0.0.tar.gz https://github.com/Yleisradio/chtf/archive/v2.0.0.tar.gz
     tar -xzvf chtf-2.0.0.tar.gz
     cd chtf-2.0.0/
     make install
