@@ -36,7 +36,7 @@ Manual installation on all systems:
     cd chtf-2.0.0/
     make install
 
-The default installation location is `$HOME/local/chtf/`. See the [Tips section](#tips) for installing to other locations.
+The default installation location is `$HOME/share/chtf/`. See the [Tips section](#tips) for installing to other locations.
 
 The `etc/` directory includes completion files for the supported shells. Follow your shell's instructions how to install them.
 
