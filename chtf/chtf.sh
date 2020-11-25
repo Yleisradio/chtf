@@ -28,7 +28,9 @@
 if [[ -z "$CHTF_TERRAFORM_DIR" ]]; then
     if [[ "$CHTF_AUTO_INSTALL_METHOD" == 'homebrew' ]]; then
         CHTF_TERRAFORM_DIR="$(brew --caskroom)"
-    elif [[ -z "$CHTF_AUTO_INSTALL_METHOD" ]] && brew tap 2>/dev/null | grep -q '^yleisradio/terraforms$'; then
+    elif [[ -z "$CHTF_AUTO_INSTALL_METHOD" ]] &&
+        command -v brew >/dev/null &&
+        [[ -d "$(brew --repo)/Library/Taps/yleisradio/homebrew-terraforms" ]]; then
         # https://github.com/Yleisradio/homebrew-terraforms in use
         CHTF_TERRAFORM_DIR="$(brew --caskroom)"
         CHTF_AUTO_INSTALL_METHOD='homebrew'
