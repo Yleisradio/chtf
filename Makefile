@@ -6,18 +6,28 @@ else
     PREFIX ?= $(HOME)
 endif
 
-CHTF_FILES := chtf.sh chtf.fish VERSION
-CHTF_BIN_FILES := __chtf_terraform-install.sh
+ifeq ($(PREFIX), $(HOME))
+    FISH_FUNCTION_DIR ?= $(HOME)/.config/fish/functions
+    FISH_COMPLETION_DIR ?= $(HOME)/.config/fish/completions
+else
+    FISH_FUNCTION_DIR ?= $(PREFIX)/share/fish/vendor_functions.d
+    FISH_COMPLETION_DIR ?= $(PREFIX)/share/fish/vendor_completions.d
+endif
 
 all:
 
-install:
+install: install_sh install_fish
+
+install_sh:
 	install -d $(DESTDIR)$(PREFIX)/share/chtf
-	for f in $(CHTF_FILES); do \
-	    install -m 0644 chtf/$$f $(DESTDIR)$(PREFIX)/share/chtf; \
-	done
-	for f in $(CHTF_BIN_FILES); do \
-	    install -m 0755 chtf/$$f $(DESTDIR)$(PREFIX)/share/chtf; \
-	done
+	install -m 0644 chtf/chtf.sh $(DESTDIR)$(PREFIX)/share/chtf
+	install -m 0755 chtf/__chtf_terraform-install.sh $(DESTDIR)$(PREFIX)/share/chtf
+
+install_fish:
+	install -d $(DESTDIR)$(FISH_FUNCTION_DIR)
+	install -m 0644 chtf/chtf.fish $(DESTDIR)$(FISH_FUNCTION_DIR)
+	install -m 0755 chtf/__chtf_terraform-install.sh $(DESTDIR)$(FISH_FUNCTION_DIR)
+	install -d $(DESTDIR)$(FISH_COMPLETION_DIR)
+	install -m 0644 etc/chtf-completion.fish $(DESTDIR)$(FISH_COMPLETION_DIR)/chtf.fish
 
 .PHONY: all install
