@@ -29,7 +29,8 @@ if not set -q CHTF_TERRAFORM_DIR
     if test "$CHTF_AUTO_INSTALL_METHOD" = homebrew
         set -g CHTF_TERRAFORM_DIR (brew --caskroom)
     else if test -z "$CHTF_AUTO_INSTALL_METHOD"
-        and string match -q 'yleisradio/terraforms' (brew tap 2>/dev/null)
+        and type -q brew
+        and test -d (brew --repo)/Library/Taps/yleisradio/homebrew-terraforms
         # https://github.com/Yleisradio/homebrew-terraforms in use
         set -g CHTF_TERRAFORM_DIR (brew --caskroom)
         set -g CHTF_AUTO_INSTALL_METHOD homebrew
