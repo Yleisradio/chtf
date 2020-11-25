@@ -153,7 +153,7 @@ _chtf_install_zip() {
     local tf_dir="$CHTF_TERRAFORM_DIR/terraform-$tf_version"
 
     mkdir -p "$tf_dir"
-    env TF_INSTALL_DIR="$tf_dir" "$(_chtf_root_dir)"/terraform-install.sh -i "$tf_version"
+    env TF_INSTALL_DIR="$tf_dir" "$(_chtf_root_dir)"/__chtf_terraform-install.sh -i "$tf_version"
 }
 
 _chtf_confirm() {

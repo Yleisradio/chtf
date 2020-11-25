@@ -7,7 +7,7 @@ else
 endif
 
 CHTF_FILES := chtf.sh chtf.fish VERSION
-CHTF_BIN_FILES := terraform-install.sh
+CHTF_BIN_FILES := __chtf_terraform-install.sh
 
 all:
 
