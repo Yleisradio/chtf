@@ -21,6 +21,8 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+set -g CHTF_VERSION 2.0.1-dev
+
 # Set defaults
 
 set -q CHTF_AUTO_INSTALL; or set -g CHTF_AUTO_INSTALL ask
@@ -131,7 +133,7 @@ end
 
 function _chtf_install_zip -a tf_version
     set -l tf_dir $CHTF_TERRAFORM_DIR/terraform-$tf_version
-    set -l installer (_chtf_root_dir)/terraform-install.sh
+    set -l installer (_chtf_root_dir)/__chtf_terraform-install.sh
 
     mkdir -p $tf_dir
     env TF_INSTALL_DIR=$tf_dir $installer -i $tf_version
@@ -150,6 +152,3 @@ end
 function _chtf_root_dir
     dirname (status --current-filename)
 end
-
-# Load and store the version number
-set -g CHTF_VERSION (cat (_chtf_root_dir)/VERSION)

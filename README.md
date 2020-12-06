@@ -36,9 +36,9 @@ Manual installation on all systems:
     cd chtf-2.0.0/
     make install
 
-The default installation location is `$HOME/share/chtf/`. See the [Tips section](#tips) for installing to other locations.
+The default installation location is `$HOME/share/chtf/` for bash/zsh, and `$HOME/.config/fish/` for fish. See the [Tips section](#tips) for installing to other locations.
 
-The `etc/` directory includes completion files for the supported shells. Follow your shell's instructions how to install them.
+The `etc/` directory includes completion files for the supported shells. Follow your shell's instructions how to install them. The fish autocompletion is installed for autoloading.
 
 ---
 
@@ -72,11 +72,15 @@ There shouldn't be normally need to set this variable.
 
 After installing, `chtf` has to be loaded to the shell.
 
+#### fish
+
+The fish version is [autoloaded](https://fishshell.com/docs/current/tutorial.html#autoloading-functions) so there is nothing more to do!
+
+#### bash and zsh
+
 The base directory on the following examples depends how and where `chtf` is installed. This assumes `make install`. With Homebrew, replace `$HOME` with the output of `brew --prefix`.
 
 New shell session has to be started for the changes to take effect.
-
-#### bash and zsh
 
 Add the following to the `~/.bashrc` or `~/.zshrc`:
 
@@ -90,22 +94,6 @@ Add the following to the `~/.bashrc` or `~/.zshrc`:
 if [[ -f "$HOME/share/chtf/chtf.sh" ]]; then
     source "$HOME/share/chtf/chtf.sh"
 fi
-```
-
-#### fish
-
-Add the following into `~/.config/fish/config.fish`:
-
-```fish
-######################################################################
-# chtf
-
-# Uncomment and change the value to override the default:
-#set -g CHTF_AUTO_INSTALL ask # yes/no/ask
-
-if test -f $HOME/share/chtf/chtf.fish
-    source $HOME/share/chtf/chtf.fish
-end
 ```
 
 ## Usage

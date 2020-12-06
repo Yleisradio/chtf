@@ -21,6 +21,8 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+CHTF_VERSION='2.0.1-dev'
+
 # Set defaults
 
 : "${CHTF_AUTO_INSTALL:=ask}"
@@ -47,7 +49,7 @@ chtf() {
             echo "usage: chtf [<version> | system]"
             ;;
         -V|--version)
-            echo "chtf: ${CHTF_VERSION:-[unknown version]}"
+            echo "chtf: $CHTF_VERSION"
             ;;
         "")
             _chtf_list
@@ -151,7 +153,7 @@ _chtf_install_zip() {
     local tf_dir="$CHTF_TERRAFORM_DIR/terraform-$tf_version"
 
     mkdir -p "$tf_dir"
-    env TF_INSTALL_DIR="$tf_dir" "$(_chtf_root_dir)"/terraform-install.sh -i "$tf_version"
+    env TF_INSTALL_DIR="$tf_dir" "$(_chtf_root_dir)"/__chtf_terraform-install.sh -i "$tf_version"
 }
 
 _chtf_confirm() {
@@ -181,6 +183,3 @@ _chtf_root_dir() {
         echo 'chtf: [WARN] Unknown shell' >&2
     fi
 }
-
-# Load and store the version number
-CHTF_VERSION=$(cat "$(_chtf_root_dir)/VERSION")
