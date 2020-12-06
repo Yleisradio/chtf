@@ -1,5 +1,7 @@
-# 2.0.1 / _Not released yet_
+# 2.1.0 / 2020-12-06
 
+* Reduce initial loading time significantly on Homebrew environments ([#4](https://github.com/Yleisradio/chtf/issues/4), [#5](https://github.com/Yleisradio/chtf/issues/5))
+* Install Fish function and completion for autoloading ([#6](https://github.com/Yleisradio/chtf/issues/6))
 
 # 2.0.0 / 2020-11-05
 
