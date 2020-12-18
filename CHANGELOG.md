@@ -1,5 +1,6 @@
-# 2.1.1 / _Not released yet_
+# 2.1.1 / 2020-12-18
 
+* Replace `brew cask install` with `brew install --cask` ([#8](https://github.com/Yleisradio/chtf/issues/8))
 
 # 2.1.0 / 2020-12-06
 
