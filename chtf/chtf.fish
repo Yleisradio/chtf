@@ -128,7 +128,7 @@ function _chtf_install -a tf_version
 end
 
 function _chtf_install_homebrew -a tf_version
-    brew cask install "terraform-$tf_version"
+    brew install --cask "terraform-$tf_version"
 end
 
 function _chtf_install_zip -a tf_version

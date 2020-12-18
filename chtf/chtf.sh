@@ -145,7 +145,7 @@ _chtf_install() {
 
 _chtf_install_homebrew() {
     local tf_version="$1"
-    brew cask install "terraform-$tf_version"
+    brew install --cask "terraform-$tf_version"
 }
 
 _chtf_install_zip() {
