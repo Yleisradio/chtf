@@ -150,7 +150,7 @@ end
 
 Homebrew installed Terraform versions can be uninstalled with:
 
-    brew cask uninstall terraform-<version>
+    brew uninstall --cask terraform-<version>
 
 Otherwise installed versions can be uninstalled by deleting the directory:
 
