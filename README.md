@@ -10,7 +10,7 @@ Do you need different Terraform versions on different projects? Or maybe you wan
 
 `chtf` supports currently [bash](http://www.gnu.org/software/bash/), [zsh](http://zsh.sourceforge.net/), and [fish](https://fishshell.com/) shells. Version switching itself doesn't have any external dependencies.
 
-Optional automatic instal of missing Terraform versions requires either:
+Optional automatic install of missing Terraform versions requires either:
 
 - [Homebrew](https://brew.sh/) with [yleisradio/terraforms](https://github.com/Yleisradio/homebrew-terraforms) Tap (see below)
 - bash, unzip, and wget or curl
