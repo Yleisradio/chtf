@@ -172,7 +172,7 @@ Homebrew installed `chtf` can be uninstalled with:
 
 ---
 
-## Contibuting
+## Contributing
 
 Bug reports, pull requests, and other contributions are welcome on GitHub at [https://github.com/Yleisradio/chtf](https://github.com/Yleisradio/chtf).
 
