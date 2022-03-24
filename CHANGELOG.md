@@ -1,6 +1,6 @@
 # 2.1.2 / _Not released yet_
 
-* Fix typos in the README ([#9](https://github.com/Yleisradio/chtf/issues/9))
+* Fix typos in the README ([#15](https://github.com/Yleisradio/chtf/issues/15))
 
 # 2.1.1 / 2020-12-18
 
