@@ -1,3 +1,7 @@
+## 2.2.1 / 2024-03-17
+
+* Fix installation of new Terraform version in the fish version ([#17](https://github.com/Yleisradio/chtf/issues/17))
+
 ## 2.2.0 / 2024-03-17
 
 * Support having dashes in Cask names ([#16](https://github.com/Yleisradio/chtf/issues/16), [homebrew-terraforms#217](https://github.com/Yleisradio/homebrew-terraforms/issues/217))
