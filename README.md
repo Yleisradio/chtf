@@ -31,9 +31,9 @@ Homebrew also installs the completion for all supported shells.
 
 Manual installation on all systems:
 
-    curl -L -o chtf-2.1.1.tar.gz https://github.com/Yleisradio/chtf/archive/v2.1.1.tar.gz
-    tar -xzvf chtf-2.1.1.tar.gz
-    cd chtf-2.1.1/
+    curl -L -o chtf-2.2.0.tar.gz https://github.com/Yleisradio/chtf/archive/v2.2.0.tar.gz
+    tar -xzvf chtf-2.2.0.tar.gz
+    cd chtf-2.2.0/
     make install
 
 The default installation location is `$HOME/share/chtf/` for bash/zsh, and `$HOME/.config/fish/` for fish. See the [Tips section](#tips) for installing to other locations.
@@ -151,6 +151,8 @@ end
 Homebrew installed Terraform versions can be uninstalled with:
 
     brew uninstall --cask terraform-<version>
+
+Note that the `<version>` uses dashes instead of dots for versions installed with `chtf` v2.2.0 and newer.
 
 Otherwise installed versions can be uninstalled by deleting the directory:
 
