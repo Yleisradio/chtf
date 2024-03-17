@@ -21,7 +21,7 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-set -g CHTF_VERSION 2.2.1
+set -g CHTF_VERSION 2.2.2
 
 # Set defaults
 
@@ -78,7 +78,7 @@ end
 function _chtf_use -a tf_version
     set -l tf_cask_version (_chtf_cask_version $tf_version)
 
-    if not _chtf_find_executable $tf_version
+    if not _chtf_find_executable $tf_version > /dev/null
         _chtf_install $tf_version; or return 1
     end
 

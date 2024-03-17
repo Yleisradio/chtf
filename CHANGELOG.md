@@ -1,3 +1,7 @@
+## 2.2.2 / 2024-03-17
+
+* Remove extra path printing in the fish version ([#18](https://github.com/Yleisradio/chtf/issues/18))
+
 ## 2.2.1 / 2024-03-17
 
 * Fix installation of new Terraform version in the fish version ([#17](https://github.com/Yleisradio/chtf/issues/17))
