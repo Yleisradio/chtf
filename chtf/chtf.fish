@@ -21,7 +21,7 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-set -g CHTF_VERSION 2.2.0
+set -g CHTF_VERSION 2.2.1
 
 # Set defaults
 
@@ -59,11 +59,11 @@ function chtf
 end
 
 function _chtf_cask_version -a tf_version
-    string replace -a '.' '-' $tf_version
+    string replace -a '.' '-' -- $tf_version
 end
 
 function _chtf_version -a tf_cask_version
-    string replace -a '-' '.' $tf_cask_version
+    string replace -a '-' '.' -- $tf_cask_version
 end
 
 function _chtf_reset
@@ -82,7 +82,7 @@ function _chtf_use -a tf_version
         _chtf_install $tf_version; or return 1
     end
 
-    set -l tf_path _chtf_find_executable $tf_version
+    set -l tf_path (_chtf_find_executable $tf_version)
     if test -z $tf_path
         echo "chtf: Failed to find terraform executable for $tf_version" >&2
         return 1
