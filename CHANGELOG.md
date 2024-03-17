@@ -1,3 +1,6 @@
+## 2.2.3 / _Not released yet_
+
+
 ## 2.2.2 / 2024-03-17
 
 * Remove extra path printing in the fish version ([#18](https://github.com/Yleisradio/chtf/issues/18))
