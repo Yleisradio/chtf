@@ -1,17 +1,18 @@
-# 2.1.2 / _Not released yet_
+## 2.2.0 / 2024-03-17
 
+* Support having dashes in Cask names ([#16](https://github.com/Yleisradio/chtf/issues/16), [homebrew-terraforms#217](https://github.com/Yleisradio/homebrew-terraforms/issues/217))
 * Fix uninstall command and typos in the README ([#10](https://github.com/Yleisradio/chtf/issues/10), [#15](https://github.com/Yleisradio/chtf/issues/15))
 
-# 2.1.1 / 2020-12-18
+## 2.1.1 / 2020-12-18
 
 * Replace `brew cask install` with `brew install --cask` ([#8](https://github.com/Yleisradio/chtf/issues/8))
 
-# 2.1.0 / 2020-12-06
+## 2.1.0 / 2020-12-06
 
 * Reduce initial loading time significantly on Homebrew environments ([#4](https://github.com/Yleisradio/chtf/issues/4), [#5](https://github.com/Yleisradio/chtf/issues/5))
 * Install Fish function and completion for autoloading ([#6](https://github.com/Yleisradio/chtf/issues/6))
 
-# 2.0.0 / 2020-11-05
+## 2.0.0 / 2020-11-05
 
 New shiny release from new home! `chtf` now supports also non-Homebrew environments, also for auto-install.
 
@@ -27,39 +28,39 @@ All changes:
 * Auto-install by default asks confirmation from the user
 * `chtf` extracted from [homebrew-terraforms](https://github.com/Yleisradio/homebrew-terraforms/) to own [chtf](https://github.com/Yleisradio/chtf) project ([Old #53](https://github.com/Yleisradio/homebrew-terraforms/issues/53))
 
-# 1.4.0 / 2018-04-27
+## 1.4.0 / 2018-04-27
 
 * Add tab completion for bash, zsh, and fish
 * Get Caskroom location from Homebrew
 * Prefix private functions with underscore
 * Reformat the scripts a bit
 
-# 1.3.0 / 2017-11-06
+## 1.3.0 / 2017-11-06
 
 * Add support for the fish shell ([Old #14](https://github.com/Yleisradio/homebrew-terraforms/issues/14))
 
-# 1.2.1 / 2016-09-26
+## 1.2.1 / 2016-09-26
 
 * Reset `CHTF_CURRENT_TERRAFORM_VERSION` on `chtf system`
 * Exit faster if `brew install` fails
 
-# 1.2.0 / 2016-09-26
+## 1.2.0 / 2016-09-26
 
 * Add `CHTF_CURRENT_TERRAFORM_VERSION` variable for easy access to the currently selected version number ([Old #3](https://github.com/Yleisradio/homebrew-terraforms/issues/3))
 
-# 1.1.1 / 2016-06-27
+## 1.1.1 / 2016-06-27
 
 * Fix the `CASKROOM` path when listing Terraform versions
 
-# 1.1.0 / 2016-06-27
+## 1.1.0 / 2016-06-27
 
 * Fix the `CASKROOM` default location ([Old #2](https://github.com/Yleisradio/homebrew-terraforms/issues/2))
 
-# 1.0.1 / 2016-01-22
+## 1.0.1 / 2016-01-22
 
 * Fix the `chtf.sh` script name
 
-# 1.0.0 / 2016-01-22
+## 1.0.0 / 2016-01-22
 
 * First release!
 * `chtf` helper to automate the install and use of a specific Terraform version
