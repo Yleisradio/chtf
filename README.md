@@ -31,9 +31,9 @@ Homebrew also installs the completion for all supported shells.
 
 Manual installation on all systems:
 
-    curl -L -o chtf-2.2.1.tar.gz https://github.com/Yleisradio/chtf/archive/v2.2.1.tar.gz
-    tar -xzvf chtf-2.2.1.tar.gz
-    cd chtf-2.2.1/
+    curl -L -o chtf-2.2.2.tar.gz https://github.com/Yleisradio/chtf/archive/v2.2.2.tar.gz
+    tar -xzvf chtf-2.2.2.tar.gz
+    cd chtf-2.2.2/
     make install
 
 The default installation location is `$HOME/share/chtf/` for bash/zsh, and `$HOME/.config/fish/` for fish. See the [Tips section](#tips) for installing to other locations.
