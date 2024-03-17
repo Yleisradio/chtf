@@ -1,6 +1,6 @@
 # Copyright (c) 2017 Alex Kulbii
 # Copyright (c) 2018 Yleisradio Oy
-# Copyright (c) 2020 Teemu Matilainen
+# Copyright (c) 2020, 2024 Teemu Matilainen
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -21,7 +21,7 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-set -g CHTF_VERSION 2.1.2-dev
+set -g CHTF_VERSION 2.2.0-dev
 
 # Set defaults
 
@@ -58,6 +58,14 @@ function chtf
     end
 end
 
+function _chtf_cask_version -a tf_version
+    string replace -a '.' '-' $tf_version
+end
+
+function _chtf_version -a tf_cask_version
+    string replace -a '-' '.' $tf_cask_version
+end
+
 function _chtf_reset
     test -z "$CHTF_CURRENT"; and return 0
 
@@ -68,17 +76,15 @@ function _chtf_reset
 end
 
 function _chtf_use -a tf_version
-    set -l tf_path $CHTF_TERRAFORM_DIR/terraform-$tf_version
+    set -l tf_cask_version (_chtf_cask_version $tf_version)
 
-    # Homebrew adds a subdir named by the package version, so we test also that
-    if not test -x $tf_path/terraform -o -x $tf_path/$tf_version/terraform
+    if not _chtf_find_executable $tf_version
         _chtf_install $tf_version; or return 1
     end
 
-    if test -x $tf_path/$tf_version/terraform
-        set tf_path $tf_path/$tf_version
-    else if not test -x $tf_path/terraform
-        echo "chtf: Failed to find terraform executable in $tf_path" >&2
+    set -l tf_path _chtf_find_executable $tf_version
+    if test -z $tf_path
+        echo "chtf: Failed to find terraform executable for $tf_version" >&2
         return 1
     end
 
@@ -91,25 +97,44 @@ end
 
 function _chtf_list
     for tf_path in $CHTF_TERRAFORM_DIR/terraform-*
-        set -l tf_version (string replace -r '.*/terraform-' '' $tf_path)
+        set -l tf_cask_version (string replace -r '.*/terraform-' '' $tf_path)
+        set -l tf_version (_chtf_version $tf_cask_version)
 
-        if test -x $tf_path/$tf_version/terraform
-            set tf_path $tf_path/$tf_version
-        else if not test -x $tf_path/terraform
-            continue
+        if test -x $tf_path/$tf_version/terraform -o -x $tf_path/terraform
+            echo $tf_version
         end
-
-        set -l prefix (_chtf_list_prefix $tf_path)
-        printf '%s %s\n' $prefix $tf_version
+    end | sort --version-sort --unique | while read -l tf_version
+        printf '%s %s\n' (_chtf_list_prefix $tf_version) $tf_version
     end
 end
 
-function _chtf_list_prefix -a tf_path
-    if test $tf_path = "$CHTF_CURRENT"
+function _chtf_list_prefix -a tf_version
+    if test $tf_version = "$CHTF_CURRENT_TERRAFORM_VERSION"
         printf ' *'
     else
         printf '  '
     end
+end
+
+function _chtf_find_executable -a tf_version
+    set -l tf_cask_version (_chtf_cask_version $tf_version)
+
+    set -l tf_paths \
+        # New Cask path
+        $CHTF_TERRAFORM_DIR/terraform-$tf_cask_version/$tf_version \
+        # Old Cask path
+        $CHTF_TERRAFORM_DIR/terraform-$tf_version/$tf_version \
+        # Zip path
+        $CHTF_TERRAFORM_DIR/terraform-$tf_version
+
+    for tf_path in $tf_paths
+        if test -x $tf_path/terraform
+            echo $tf_path
+            return
+        end
+    end
+
+    return 1
 end
 
 function _chtf_install -a tf_version
@@ -128,7 +153,8 @@ function _chtf_install -a tf_version
 end
 
 function _chtf_install_homebrew -a tf_version
-    brew install --cask "terraform-$tf_version"
+    set -l tf_cask_version (_chtf_cask_version $tf_version)
+    brew install --cask "terraform-$tf_cask_version"
 end
 
 function _chtf_install_zip -a tf_version
